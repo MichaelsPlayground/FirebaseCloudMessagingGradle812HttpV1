@@ -44,6 +44,9 @@ import com.google.firebase.messaging.RemoteMessage;
  * </intent-filter>
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    /**
+     * code taken from https://github.com/firebase/quickstart-android/blob/master/messaging/app/src/main/java/com/google/firebase/quickstart/fcm/java/MyFirebaseMessagingService.java
+     */
 
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -168,13 +171,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri customSoundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.little_bell_14606);
+
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
+                        //.setSmallIcon(R.drawable.ic_stat_ic_notification)
                         .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
                         .setContentTitle(getString(R.string.fcm_message))
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
+                        //.setSound(customSoundUri)
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
