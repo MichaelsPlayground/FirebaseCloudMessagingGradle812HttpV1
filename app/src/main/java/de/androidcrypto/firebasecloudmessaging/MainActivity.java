@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import de.androidcrypto.firebasecloudmessaging.models.UserModel;
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     static final String TAG = "FirebaseCloudMessaging";
     com.google.android.material.textfield.TextInputEditText signedInUser;
+    com.google.android.material.textfield.TextInputEditText etReceipient, etMessage, etMessageTitle;
+    com.google.android.material.textfield.TextInputLayout etMessageLayout, etMessageTitleLayout;
+
     Button signIn, signOut, listUser;
 
     private static String notificationUid = "", notificationEmail, notificationName, notificationToken;
@@ -62,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         signedInUser = findViewById(R.id.etMainSignedInUser);
+        etReceipient = findViewById(R.id.etMainReceipient);
+        etMessageTitle = findViewById(R.id.etMainMessageTitle);
+        etMessageTitleLayout = findViewById(R.id.etMainMessageTitleLayout);
+        etMessage = findViewById(R.id.etMainMessage);
+        etMessageLayout = findViewById(R.id.etMainMessageLayout);
+
         signIn = findViewById(R.id.btnMainSignIn);
         signOut = findViewById(R.id.btnMainSignOut);
         listUser = findViewById(R.id.btnMainListUser);
@@ -140,6 +150,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        etMessageLayout.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //showProgressBar();
+                Log.i(TAG, "clickOnIconEnd");
+                String messageTitleString = etMessageTitle.getText().toString();
+                String messageString = etMessage.getText().toString();
+                Log.i(TAG, "title: " + messageTitleString + " message: " + messageString);
+                if (TextUtils.isEmpty(messageTitleString)) {
+                    Toast.makeText(getApplicationContext(),
+                            "message title is too short" + messageTitleString,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(messageString)) {
+                    Toast.makeText(getApplicationContext(),
+                            "message is too short" + messageTitleString,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(notificationToken)) {
+                    Toast.makeText(getApplicationContext(),
+                            "select a receipient first" + messageString,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
+                fcmNotificationsSender.SendNotifications();
+                Log.i(TAG, "notification send");
+                Toast.makeText(getApplicationContext(), "notification send", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         /**
          * incoming intent from ListUserActivity
          */
@@ -154,14 +198,11 @@ public class MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(notificationToken)) {
             Toast.makeText(this, "token selected for messaging: " + notificationToken, Toast.LENGTH_SHORT).show();
         }
-
+        etReceipient.setText(notificationUid + " (" + notificationName + ")");
 
         // for Android 13+
         askNotificationPermission();
     }
-
-
-
 
 
     /**
@@ -207,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Log.i(TAG, "save user data from database for user id: " + currentUser.getUid());
                             writeNewUser(uId, uEmail, uName, uToken);
-                            Toast.makeText(getApplicationContext(),"user data written to database", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "user data written to database", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -310,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
-                    Toast.makeText(this, "Notifications permission granted",Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     Toast.makeText(this, "FCM can't post notifications without POST_NOTIFICATIONS permission",

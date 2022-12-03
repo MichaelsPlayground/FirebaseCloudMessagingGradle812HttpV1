@@ -20,7 +20,8 @@ import java.util.Map;
 public class FcmNotificationsSender {
 
     private final String postUrl = "https://fcm.googleapis.com/fcm/send";
-    private final String fcmServerKey = "AAAA1IYYfYY:APA91bGurFhX2EGXpjTdd2mRAjRaOO35WyeHXDHGNxJVm3j6ZkPh0pSGS_WqPwumpEMRM-q0MB_Osc7OiPi7qv5hfeEzZyNXNG3dyF_GPhnW3NDwchA77vAeTeA-Vh3yAba20AICdoSh";
+    //AIzaSyBDejcnBbMIT-uO9IQVMyvLfMeOBXPd2Uk
+    private final String fcmServerKey = "AAAA94XS4eA:APA91bFHSFNsjdEOlFiIKcko2Y_vDRohRG_zTKUx1vVE-zChNi1roi7DDODLF_Cobi1jkEstGn5EfV45t6Jvn3Dh1mjRN71h9fpC-BlePVKrrKSEflCFmF1FgJDWUb4S3fTbxOudqZEm";
     String userFcmToken;
     String title;
     String body;
