@@ -5,6 +5,8 @@ apps need the app installed to get it working.
 
 To run this app you need to setup your own Firebase project on Firebase console.
 
+Project is working !
+
 
 
 AndroidManifest.xml

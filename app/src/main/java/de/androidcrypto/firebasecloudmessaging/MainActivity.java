@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         notificationUid = intent.getStringExtra("UID");
         notificationEmail = intent.getStringExtra("EMAIL");
         notificationName = intent.getStringExtra("DISPLAYNAME");
+        System.out.println("*** notificationName: " + notificationName);
         notificationToken = intent.getStringExtra("TOKEN");
         if (!TextUtils.isEmpty(notificationUid)) {
             //Toast.makeText(this, "user selected for messaging: " + notificationUid, Toast.LENGTH_SHORT).show();
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(notificationToken)) {
             Toast.makeText(this, "token selected for messaging: " + notificationToken, Toast.LENGTH_SHORT).show();
         }
-        etReceipient.setText(notificationUid + " (" + notificationName + ")");
+        etReceipient.setText(notificationEmail + " (" + notificationName + ")");
 
         // for Android 13+
         askNotificationPermission();

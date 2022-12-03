@@ -158,9 +158,7 @@
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="20">
+                app:boxCornerRadiusTopStart="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMainReceipient"
@@ -168,8 +166,6 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:inputType="text"
-                    android:maxLength="20"
-                    android:maxLines="1"
                     android:text=""
                     android:visibility="visible"
                     android:focusable="false"
@@ -205,7 +201,6 @@
                     android:text="MessageTitle"
                     android:visibility="visible"
                     tools:ignore="KeyboardInaccessibleWidget" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -239,136 +234,7 @@
                     android:text=""
                     android:visibility="visible"
                     tools:ignore="KeyboardInaccessibleWidget" />
-
             </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnMainDatabaseUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="database user profile" />
-
-            <Button
-                android:id="@+id/btnMainDatabaseUserImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="update user picture" />
-
-            <Button
-                android:id="@+id/btnMainSendMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="send a message to another user" />
-
-            <Button
-                android:id="@+id/btnMainListMessages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="list messages" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/blue_300"
-                android:text="* storage section *"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnMainImages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="up- and download image to Storage" />
-
-            <Button
-                android:id="@+id/btnMainUploadImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="upload an image to Storage" />
-
-            <Button
-                android:id="@+id/btnMainListImages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="list images on Storage" />
-
-            <Button
-                android:id="@+id/btnMainDownloadImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="download an image from Storage" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/blue_300"
-                android:text="* service section *"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-
-            <Button
-                android:id="@+id/btnMainSendNotification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="false"
-                android:text="send notification" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
