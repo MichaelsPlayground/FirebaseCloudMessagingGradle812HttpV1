@@ -20,7 +20,6 @@ import java.util.Map;
 public class FcmNotificationsSender {
 
     private final String postUrl = "https://fcm.googleapis.com/fcm/send";
-    //AIzaSyBDejcnBbMIT-uO9IQVMyvLfMeOBXPd2Uk
     private final String fcmServerKey = "AAAA94XS4eA:APA91bFHSFNsjdEOlFiIKcko2Y_vDRohRG_zTKUx1vVE-zChNi1roi7DDODLF_Cobi1jkEstGn5EfV45t6Jvn3Dh1mjRN71h9fpC-BlePVKrrKSEflCFmF1FgJDWUb4S3fTbxOudqZEm";
     String userFcmToken;
     String title;
@@ -40,18 +39,18 @@ public class FcmNotificationsSender {
     public void SendNotifications() {
 
         requestQueue = Volley.newRequestQueue(mActivity);
-        JSONObject mainObj = new JSONObject();
+        JSONObject mainObject = new JSONObject();
         try {
-            mainObj.put("to", userFcmToken);
-            JSONObject notiObject = new JSONObject();
-            notiObject.put("title", title);
-            notiObject.put("body", body);
-            notiObject.put("icon", "icon_for_splash");
-            notiObject.put("sound", "little_bell_14606.mp3");
-            notiObject.put("android_channel_id",R.string.default_notification_channel_id);
-            mainObj.put("notification", notiObject);
+            mainObject.put("to", userFcmToken);
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title", title);
+            notificationObject.put("body", body);
+            notificationObject.put("icon", "icon_for_splash");
+            notificationObject.put("sound", "little_bell_14606.mp3");
+            notificationObject.put("android_channel_id",R.string.default_notification_channel_id);
+            mainObject.put("notification", notificationObject);
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObj, new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -67,7 +66,6 @@ public class FcmNotificationsSender {
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-
                     Map<String, String> header = new HashMap<>();
                     header.put("content-type", "application/json");
                     header.put("authorization", "key=" + fcmServerKey);
