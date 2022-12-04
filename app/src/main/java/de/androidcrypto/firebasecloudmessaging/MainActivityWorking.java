@@ -1,15 +1,12 @@
 package de.androidcrypto.firebasecloudmessaging;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -36,16 +33,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.androidcrypto.firebasecloudmessaging.models.UserModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityWorking extends AppCompatActivity {
 
     static final String TAG = "FirebaseCloudMessaging";
     com.google.android.material.textfield.TextInputEditText signedInUser;
@@ -152,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "list user on database");
-                Intent intent = new Intent(MainActivity.this, ListUserActivity.class);
+                Intent intent = new Intent(MainActivityWorking.this, ListUserActivity.class);
                 intent.putExtra("ALL_USERS", true);
                 startActivity(intent);
                 //finish();
@@ -186,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
+                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivityWorking.this, MainActivityWorking.this);
                 fcmNotificationsSender.SendNotifications();
                 Log.i(TAG, "notification send");
                 Toast.makeText(getApplicationContext(), "notification send", Toast.LENGTH_SHORT).show();
@@ -210,30 +205,8 @@ public class MainActivity extends AppCompatActivity {
         }
         etReceipient.setText(notificationEmail + " (" + notificationName + ")");
 
-        // create a notification channel
-        createNotificationChannel(this);
-
         // for Android 13+
         askNotificationPermission();
-    }
-
-    // create the channel as early as possible as you cannot change the channel later
-    public  void createNotificationChannel(@NonNull Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = context.getString(R.string.default_notification_channel_id);
-            String channelName = context.getString(R.string.default_notification_channel_name);
-            Uri customSoundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.little_bell_14606);
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build();
-            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setSound(customSoundUri, audioAttributes);
-            //channel.setVibrationPattern(VIBRATE_PATTERN);
-            channel.enableVibration(true);
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
     /**

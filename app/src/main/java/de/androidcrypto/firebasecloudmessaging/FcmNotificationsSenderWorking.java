@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FcmNotificationsSender {
+public class FcmNotificationsSenderWorking {
 
     private final String postUrl = "https://fcm.googleapis.com/fcm/send";
     //AIzaSyBDejcnBbMIT-uO9IQVMyvLfMeOBXPd2Uk
@@ -29,7 +29,7 @@ public class FcmNotificationsSender {
     Activity mActivity;
     private RequestQueue requestQueue;
 
-    public FcmNotificationsSender(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
+    public FcmNotificationsSenderWorking(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
         this.userFcmToken = userFcmToken;
         this.title = title;
         this.body = body;
@@ -48,7 +48,7 @@ public class FcmNotificationsSender {
             notiObject.put("body", body);
             notiObject.put("icon", "icon_for_splash");
             notiObject.put("sound", "little_bell_14606.mp3");
-            notiObject.put("android_channel_id",R.string.default_notification_channel_id);
+            notiObject.put("android_channel_id","1");
             mainObj.put("notification", notiObject);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObj, new Response.Listener<JSONObject>() {
