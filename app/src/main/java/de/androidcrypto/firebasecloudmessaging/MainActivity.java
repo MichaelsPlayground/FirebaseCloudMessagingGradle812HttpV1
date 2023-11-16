@@ -186,8 +186,13 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
-                fcmNotificationsSender.SendNotifications();
+                FcmNotificationsSenderHttpV1 fcmNotificationsSender = new FcmNotificationsSenderHttpV1(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
+                fcmNotificationsSender.prepNotification(notificationToken);
+                Log.i(TAG, "notification send with HttpV1 api");
+                Toast.makeText(getApplicationContext(), "notification send with HttpV1 api", Toast.LENGTH_SHORT).show();
+                // old
+                //FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
+                //fcmNotificationsSender.SendNotifications();
                 Log.i(TAG, "notification send");
                 Toast.makeText(getApplicationContext(), "notification send", Toast.LENGTH_SHORT).show();
             }
