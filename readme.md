@@ -98,6 +98,7 @@ Configure your Consent screen and then create an OAuth Client ID of type Desktop
 
 ```
 
+https://console.cloud.google.com/apis/api/googlecloudmessaging.googleapis.com/quotas?project=fir-cloudmessaging-b020c
 
 
 
