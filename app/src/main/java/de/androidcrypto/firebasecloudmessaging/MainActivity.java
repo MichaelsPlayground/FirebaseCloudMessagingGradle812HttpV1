@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             //Toast.makeText(this, "user signed in", Toast.LENGTH_SHORT).show();
 
-            // get Firebase Clud Messaging token
+            // get Firebase Cloud Messaging token
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override

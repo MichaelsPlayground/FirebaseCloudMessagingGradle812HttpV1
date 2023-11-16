@@ -25,5 +25,5 @@ buildscript {
     }
 }
 
-rootProject.name = "FirebaseCloudMessagingGradle812"
+rootProject.name = "FirebaseCloudMessagingGradle812HttpV1"
 include ':app'
