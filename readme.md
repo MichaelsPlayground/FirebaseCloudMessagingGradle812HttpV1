@@ -24,7 +24,7 @@ to 1.10.x - this won't work ether, use 1.9.0.
 Firebase Cloud Messaging migration guide: https://firebase.google.com/docs/cloud-messaging/migrate-v1
 
 additional project for new HttpV1 api: https://github.com/basilmt/FCM-Snippet
-
+a
 
 AndroidManifest.xml
 ```plaintext
