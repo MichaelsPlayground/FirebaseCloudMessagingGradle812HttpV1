@@ -79,6 +79,7 @@ public class FcmNotificationsSenderHttpV1 {
                 Map<String,String> map = new HashMap<>();
                 try {
                     String tkn =  getAccessToken();
+                    System.out.println("*** getAccessToken: " + tkn);
                     map.put("Authorization", "Bearer " + tkn);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -117,7 +118,8 @@ public class FcmNotificationsSenderHttpV1 {
                 .createScoped(Arrays.asList(AllConstants.SCOPES));
         googleCredential.refresh();
 
-        Log.i("TAGggg", "getAccessToken: " + googleCredential.toString());
+        Log.i("TAG", "getAccessToken: " + googleCredential.toString());
+        System.out.println("*** getAccessToken: " + googleCredential.toString());
         return googleCredential.getAccessToken().getTokenValue();
     }
 
