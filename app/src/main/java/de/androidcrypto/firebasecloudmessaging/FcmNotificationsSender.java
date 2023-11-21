@@ -1,5 +1,8 @@
 package de.androidcrypto.firebasecloudmessaging;
 
+
+import static com.google.android.gms.common.util.CollectionUtils.mapOf;
+
 import android.app.Activity;
 import android.content.Context;
 
@@ -10,6 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +39,23 @@ public class FcmNotificationsSender {
         this.body = body;
         this.mContext = mContext;
         this.mActivity = mActivity;
+    }
+
+    public void SendNotificationsV2() {
+
+        // Construct the FCM message payload
+        // https://blog.stackademic.com/integrating-firebase-cloud-messaging-for-real-time-push-notifications-in-android-5b550d2a8f6
+
+        Map payload = null;
+        payload = mapOf("sender", "john", "message", "myMessage", "dat", "myDat");
+
+        FirebaseMessaging.getInstance().send(
+                new RemoteMessage.Builder(userFcmToken)
+                        .setMessageType("chat")
+                        .setData(payload)
+                        .build()
+        );
+
     }
 
     public void SendNotifications() {
