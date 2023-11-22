@@ -13,6 +13,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.*;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.FirebaseMessagingService.*;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +60,56 @@ public class FcmNotificationsSenderHttpV1 {
         this.mActivity = mActivity;
     }
 
+    // chatGpt solution
+    public void send(String DEVICE_TOKEN) {
+
+        final String FCM_API = "https://fcm.googleapis.com/v1/projects/fir-cloudmessaging-b020c/messages:send";
+        //final String SERVER_KEY = "dd9ad3f97d8a4dd128c697a1be0091ea4db1416a";
+
+
+        try {
+            String SERVER_KEY = getAccessToken();
+            URL url = new URL(FCM_API);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Authorization", "Bearer " + SERVER_KEY);
+            connection.setDoOutput(true);
+
+            // Create the JSON payload for the FCM message
+            String jsonInputString = "{"
+                    + "\"message\":{"
+                    + "\"token\":\"" + DEVICE_TOKEN + "\","
+                    + "\"notification\":{"
+                    + "\"title\":\"Title\","
+                    + "\"body\":\"Body\""
+                    + "},"
+                    + "\"data\":{"
+                    + "\"key1\":\"value1\","
+                    + "\"key2\":\"value2\""
+                    + "}"
+                    + "}"
+                    + "}";
+
+            // Send the request
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Get the response
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Log.d("FCM", "Message sent successfully");
+            } else {
+                Log.e("FCM", "Error sending message. Response Code: " + responseCode);
+            }
+        } catch (Exception e) {
+            Log.e("FCM", "send Exception: " + e.getMessage());
+        }
+    }
+
+
     // new
     public void prepNotification(String token) {
         JSONObject message = new JSONObject();
@@ -68,17 +133,17 @@ public class FcmNotificationsSenderHttpV1 {
 
     private void sentNotification(JSONObject to) {
         System.out.println("*** sentNotification: " + to);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, AllConstants.NOTIFICATION_URL,to, response -> {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, AllConstants.NOTIFICATION_URL, to, response -> {
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() {
 
-                Map<String,String> map = new HashMap<>();
+                Map<String, String> map = new HashMap<>();
                 try {
-                    String tkn =  getAccessToken();
+                    String tkn = getAccessToken();
                     System.out.println("*** getAccessToken: " + tkn);
                     map.put("Authorization", "Bearer " + tkn);
                 } catch (IOException e) {
@@ -126,7 +191,6 @@ public class FcmNotificationsSenderHttpV1 {
     // following: OLD
 
 
-
     public void SendNotifications() {
 
         requestQueue = Volley.newRequestQueue(mActivity);
@@ -138,7 +202,7 @@ public class FcmNotificationsSenderHttpV1 {
             notificationObject.put("body", body);
             notificationObject.put("icon", "icon_for_splash");
             notificationObject.put("sound", "little_bell_14606.mp3");
-            notificationObject.put("android_channel_id",R.string.default_notification_channel_id);
+            notificationObject.put("android_channel_id", R.string.default_notification_channel_id);
             mainObject.put("notification", notificationObject);
 
             System.out.println("*** starting request with mainObject: " + mainObject.toString());

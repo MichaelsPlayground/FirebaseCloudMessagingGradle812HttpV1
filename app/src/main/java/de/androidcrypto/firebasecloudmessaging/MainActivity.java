@@ -187,7 +187,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 FcmNotificationsSenderHttpV1 fcmNotificationsSender = new FcmNotificationsSenderHttpV1(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
-                fcmNotificationsSender.prepNotification(notificationToken);
+
+                // chat GPT
+                fcmNotificationsSender.send(notificationToken);
+
+
+
+                //fcmNotificationsSender.prepNotification(notificationToken);
                 Log.i(TAG, "notification send with HttpV1 api");
                 Toast.makeText(getApplicationContext(), "notification send with HttpV1 api", Toast.LENGTH_SHORT).show();
                 // old
