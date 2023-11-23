@@ -1,7 +1,6 @@
 package de.androidcrypto.firebasecloudmessaging;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -37,12 +36,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
-
-import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -194,30 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 FcmNotificationsSenderHttpV1 fcmNotificationsSender = new FcmNotificationsSenderHttpV1(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
-
-                // own
-                //fcmNotificationsSender.sendOwn(notificationToken);
                 fcmNotificationsSender.sendOwn(notificationToken, messageTitleString, messageString);
                 //fcmNotificationsSender.sendOwnDirectBoot(notificationToken, messageTitleString, messageString);
 
                 Toast.makeText(getApplicationContext(), "notification send with HttpV1 api", Toast.LENGTH_SHORT).show();
 
-                //JSONObject jsonDirectBoot = fcmNotificationsSender.createJsonDirectBoot(notificationToken, messageTitleString, messageString);
-                //Log.i(TAG, "jsonDirectBoot:\n" + jsonDirectBoot.toString());
-
-
-                if (notificationToken != null) return;
-                // chat GPT
-                //fcmNotificationsSender.send(notificationToken);
-
-                //fcmNotificationsSender.prepNotification(notificationToken);
-                Log.i(TAG, "notification send with HttpV1 api");
-                Toast.makeText(getApplicationContext(), "notification send with HttpV1 api", Toast.LENGTH_SHORT).show();
-                // old
-                //FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
-                //fcmNotificationsSender.SendNotifications();
-                Log.i(TAG, "notification send");
-                Toast.makeText(getApplicationContext(), "notification send", Toast.LENGTH_SHORT).show();
             }
         });
 
