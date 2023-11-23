@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     static final String TAG = "FirebaseCloudMessaging";
     com.google.android.material.textfield.TextInputEditText signedInUser;
-    com.google.android.material.textfield.TextInputEditText etReceipient, etMessage, etMessageTitle;
+    com.google.android.material.textfield.TextInputEditText etRecipient, etMessage, etMessageTitle;
     com.google.android.material.textfield.TextInputLayout etMessageLayout, etMessageTitleLayout;
 
     Button signIn, signOut, listUser;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         signedInUser = findViewById(R.id.etMainSignedInUser);
-        etReceipient = findViewById(R.id.etMainReceipient);
+        etRecipient = findViewById(R.id.etMainRecipient);
         etMessageTitle = findViewById(R.id.etMainMessageTitle);
         etMessageTitleLayout = findViewById(R.id.etMainMessageTitleLayout);
         etMessage = findViewById(R.id.etMainMessage);
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(notificationToken)) {
             Toast.makeText(this, "token selected for messaging: " + notificationToken, Toast.LENGTH_SHORT).show();
         }
-        etReceipient.setText(notificationEmail + " (" + notificationName + ")");
+        etRecipient.setText(notificationEmail + " (" + notificationName + ")");
 
         // create a notification channel
         createNotificationChannel(this);

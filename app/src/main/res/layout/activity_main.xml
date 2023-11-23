@@ -146,14 +146,14 @@
                 android:text="select receipient" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etMainReceipientLayout"
+                android:id="@+id/etMainRecipientLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:hint="receipient of the message"
+                android:hint="recipient of the message"
                 android:visibility="visible"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
@@ -161,7 +161,7 @@
                 app:boxCornerRadiusTopStart="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMainReceipient"
+                    android:id="@+id/etMainRecipient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
