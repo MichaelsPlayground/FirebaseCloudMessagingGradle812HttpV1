@@ -100,9 +100,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
             String notificationBody = remoteMessage.getNotification().getBody();
+            String notificationTitle = remoteMessage.getNotification().getTitle();
             if (remoteMessage.getNotification().getBody() != null) {
-                sendNotification(notificationBody);
+                sendNotification(notificationTitle, notificationBody);
             }
         }
 
@@ -183,6 +185,47 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         //.setSmallIcon(R.drawable.ic_stat_ic_notification)
                         .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
                         .setContentTitle(getString(R.string.fcm_message))
+                        .setContentText(messageBody)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        //.setSound(customSoundUri)
+                        .setContentIntent(pendingIntent)
+                        .setLights(Color.MAGENTA, 1000, 1000);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        /* is created in MainActivity
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+            channel.setSound(customSoundUri, audioAttributes);
+            notificationManager.createNotificationChannel(channel);
+        }*/
+        notificationManager.notify(1 /* ID of notification */, notificationBuilder.build());
+    }
+
+    private void sendNotification(String messageTitle, String messageBody) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_IMMUTABLE);
+
+        String channelId = getString(R.string.default_notification_channel_id);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri customSoundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.little_bell_14606);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, channelId)
+                        //.setSmallIcon(R.drawable.ic_stat_ic_notification)
+                        .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
+                        .setContentTitle(messageTitle)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)

@@ -15,12 +15,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.*;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.FirebaseMessagingService.*;
 
-import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FcmNotificationsSenderHttpV1 {
+    private static final String TAG = "FcmNotSendHttpV1";
 
     // this is using the new Api HttpV1, see migration guide:
     // based on https://github.com/basilmt/FCM-Snippet
@@ -60,12 +60,121 @@ public class FcmNotificationsSenderHttpV1 {
         this.mActivity = mActivity;
     }
 
+    public void sendOwn(String token, String title, String messageBody) {
+        Log.i(TAG, "send own token: " + token + " title: " + title + " messageBody: " + messageBody);
+        JSONObject jsonObject = createJson(token, title, messageBody);
+        System.out.println("JSON message:\n" + jsonObject.toString());
+
+        String SERVER_KEY;
+        try {
+            SERVER_KEY = getAccessToken();
+        } catch (IOException e) {
+            System.out.println("IOException on getAccessToken");
+            return;
+        }
+        System.out.println("Server_Key: " + SERVER_KEY);
+
+        //sentNotification(jsonObject);
+        sentNotificationOwn(jsonObject);
+    }
+
+
+    public JSONObject createJson(String token, String title, String messageBody) {
+        JSONObject message = new JSONObject();
+        JSONObject to = new JSONObject();
+        JSONObject data = new JSONObject();
+        try {
+            data.put("title", title);
+            data.put("body", messageBody);
+
+            to.put("token", token);
+            to.put("notification", data);
+
+            message.put("message", to);
+            if (token != null) {
+                Log.i(TAG, "createJson message: " + message);
+                return message;
+                //sentNotification(message);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+/*
+try {
+            data.put("title", "Notification");
+            data.put("body", "you have 1 notification");
+
+            to.put("token", token);
+            to.put("notification", data);
+
+            message.put("message", to);
+            if (token != null) {
+                return message;
+                //sentNotification(message);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+ */
+        return null;
+    }
+    /*
+    {"message":{"token":"d9CyRxkZSt2MaQd1uACVi7:APA91bFup3k8gO_YSL-HQO-VK8hm8E4z_Iza2zG90uvdIjJ3VI9TNxkz15nGUjz_GxdyygM8WQLgHkCCibqSW9SUEEdy4aaCvbVE69131BJztsN4bXV7wTN1uJ4KfI-yFXQm_AfLS7Ud","data":{"title":"Notification","body":"you have 1 notification"}}}
+
+    {"message":{
+                "token":"d9CyRxkZSt2MaQd1uACVi7:APA91bFup3k8gO_YSL-HQO-VK8hm8E4z_Iza2zG90uvdIjJ3VI9TNxkz15nGUjz_GxdyygM8WQLgHkCCibqSW9SUEEdy4aaCvbVE69131BJztsN4bXV7wTN1uJ4KfI-yFXQm_AfLS7Ud",
+                "notification":{
+                  "title":"Notification",
+                  "body":"you have 1 notification"}}}
+
+{
+   "message":{
+      "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+      "notification":{
+        "body":"This is an FCM notification message!",
+        "title":"FCM Message"
+      }
+   }
+}
+     */
+
+    public void sentNotificationOwn(JSONObject jsonObject) {
+
+        final String FCM_API = "https://fcm.googleapis.com/v1/projects/fir-cloudmessaging-b020c/messages:send";
+
+        try {
+            String SERVER_KEY = getAccessToken();
+            URL url = new URL(FCM_API);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Authorization", "Bearer " + SERVER_KEY);
+            connection.setDoOutput(true);
+
+            // Send the request
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonObject.toString().getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Get the response
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Log.d("FCM", "Message sent successfully");
+            } else {
+                Log.e("FCM", "Error sending message. Response Code: " + responseCode);
+            }
+        } catch (Exception e) {
+            Log.e("FCM", "send Exception: " + e.getMessage());
+        }
+    }
+
+
+
     // chatGpt solution
     public void send(String DEVICE_TOKEN) {
 
         final String FCM_API = "https://fcm.googleapis.com/v1/projects/fir-cloudmessaging-b020c/messages:send";
-        //final String SERVER_KEY = "dd9ad3f97d8a4dd128c697a1be0091ea4db1416a";
-
 
         try {
             String SERVER_KEY = getAccessToken();
@@ -111,6 +220,17 @@ public class FcmNotificationsSenderHttpV1 {
 
 
     // new
+    /*
+    {
+   "message":{
+      "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+      "notification":{
+        "body":"This is an FCM notification message!",
+        "title":"FCM Message"
+      }
+   }
+}
+     */
     public void prepNotification(String token) {
         JSONObject message = new JSONObject();
         JSONObject to = new JSONObject();
@@ -132,6 +252,7 @@ public class FcmNotificationsSenderHttpV1 {
     }
 
     private void sentNotification(JSONObject to) {
+        Log.i(TAG, "sentNotification " + to);
         System.out.println("*** sentNotification: " + to);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, AllConstants.NOTIFICATION_URL, to, response -> {
 
@@ -170,6 +291,7 @@ public class FcmNotificationsSenderHttpV1 {
             @Override
             public void onRequestEvent(Request<?> request, int event) {
                 System.out.println("*** requestQueue: " + request.toString());
+                System.out.println("event: " + event);
             }
         });
 

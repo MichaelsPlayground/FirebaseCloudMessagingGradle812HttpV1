@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -91,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             //Toast.makeText(this, "great, your app is online and can send messages", Toast.LENGTH_SHORT).show();
         }
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -188,10 +193,13 @@ public class MainActivity extends AppCompatActivity {
 
                 FcmNotificationsSenderHttpV1 fcmNotificationsSender = new FcmNotificationsSenderHttpV1(notificationToken, messageTitleString, messageString, MainActivity.this,MainActivity.this);
 
+                // own
+                //fcmNotificationsSender.sendOwn(notificationToken);
+                fcmNotificationsSender.sendOwn(notificationToken, messageTitleString, messageString);
+
+                if (notificationToken != null) return;
                 // chat GPT
-                fcmNotificationsSender.send(notificationToken);
-
-
+                //fcmNotificationsSender.send(notificationToken);
 
                 //fcmNotificationsSender.prepNotification(notificationToken);
                 Log.i(TAG, "notification send with HttpV1 api");
