@@ -70,7 +70,7 @@ public class MainActivityWorking extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         signedInUser = findViewById(R.id.etMainSignedInUser);
-        etReceipient = findViewById(R.id.etMainReceipient);
+        etReceipient = findViewById(R.id.etMainRecipient);
         etMessageTitle = findViewById(R.id.etMainMessageTitle);
         etMessageTitleLayout = findViewById(R.id.etMainMessageTitleLayout);
         etMessage = findViewById(R.id.etMainMessage);

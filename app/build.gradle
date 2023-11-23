@@ -39,13 +39,13 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:8.0.2'
-
     implementation 'com.google.firebase:firebase-messaging'
-    //implementation 'com.google.firebase:firebase-iid:21.1.0'
-    //implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.19.0'
+    implementation 'com.google.api-client:google-api-client-android:1.31.3'
+
     implementation 'com.android.volley:volley:1.2.1'
     // Add the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics'
+    //implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.work:work-runtime:2.8.1'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -55,13 +55,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.google.auth:google-auth-library-oauth2-http:1.19.0'
-
-
-    implementation 'com.google.api-client:google-api-client-android:1.31.3'
-
 
 }
 // ADD THIS AT THE BOTTOM
