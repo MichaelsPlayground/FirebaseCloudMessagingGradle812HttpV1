@@ -39,6 +39,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -196,6 +198,13 @@ public class MainActivity extends AppCompatActivity {
                 // own
                 //fcmNotificationsSender.sendOwn(notificationToken);
                 fcmNotificationsSender.sendOwn(notificationToken, messageTitleString, messageString);
+                //fcmNotificationsSender.sendOwnDirectBoot(notificationToken, messageTitleString, messageString);
+
+                Toast.makeText(getApplicationContext(), "notification send with HttpV1 api", Toast.LENGTH_SHORT).show();
+
+                //JSONObject jsonDirectBoot = fcmNotificationsSender.createJsonDirectBoot(notificationToken, messageTitleString, messageString);
+                //Log.i(TAG, "jsonDirectBoot:\n" + jsonDirectBoot.toString());
+
 
                 if (notificationToken != null) return;
                 // chat GPT

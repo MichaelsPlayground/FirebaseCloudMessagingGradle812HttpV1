@@ -78,6 +78,24 @@ public class FcmNotificationsSenderHttpV1 {
         sentNotificationOwn(jsonObject);
     }
 
+    public void sendOwnDirectBoot(String token, String title, String messageBody) {
+        Log.i(TAG, "send own token: " + token + " title: " + title + " messageBody: " + messageBody);
+        JSONObject jsonObject = createJsonDirectBoot(token, title, messageBody);
+        System.out.println("JSON message:\n" + jsonObject.toString());
+
+        String SERVER_KEY;
+        try {
+            SERVER_KEY = getAccessToken();
+        } catch (IOException e) {
+            System.out.println("IOException on getAccessToken");
+            return;
+        }
+        System.out.println("Server_Key: " + SERVER_KEY);
+
+        //sentNotification(jsonObject);
+        sentNotificationOwn(jsonObject);
+    }
+
 
     public JSONObject createJson(String token, String title, String messageBody) {
         JSONObject message = new JSONObject();
@@ -118,6 +136,58 @@ try {
  */
         return null;
     }
+
+    public JSONObject createJsonDirectBoot(String token, String title, String messageBody) {
+        JSONObject message = new JSONObject();
+        JSONObject to = new JSONObject();
+        JSONObject data = new JSONObject();
+        JSONObject directBoot = new JSONObject();
+        try {
+            data.put("title", title);
+            data.put("body", messageBody);
+
+            directBoot.put("direct_boot_ok", true);
+
+            to.put("token", token);
+            to.put("notification", data);
+            to.put("android", directBoot);
+
+            message.put("message", to);
+            if (token != null) {
+                Log.i(TAG, "createJson message: " + message);
+                return message;
+                //sentNotification(message);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+/*
+jsonDirectBoot:
+{
+  "message":{
+    "token":"dGoMOpopT2KuLVZfKQojhV:APA91bHQB_hKVjLKgzv_Cd80BsWjtQH47t7udZTzKLpd8pjzYRJYUb6fOE6KUHS5fAzlhvoI5XnbwAu9mpCwvwJ4vyvHO7mXwD8VYy_VHb0toIjae2WdEWLx_llx0poGMgeYfBkPwApr",
+    "notification":{
+      "title":"MessageTitle",
+      "body":"rtu"},
+    "android":{
+      "direct_boot_ok":true}}}
+
+
+
+{
+  "message":{
+    "token" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1..."
+    "data": {
+      "score": "5x1",
+      "time": "15:10"
+    },
+    "android": {
+      "direct_boot_ok": true,
+    },
+}
+ */
     /*
     {"message":{"token":"d9CyRxkZSt2MaQd1uACVi7:APA91bFup3k8gO_YSL-HQO-VK8hm8E4z_Iza2zG90uvdIjJ3VI9TNxkz15nGUjz_GxdyygM8WQLgHkCCibqSW9SUEEdy4aaCvbVE69131BJztsN4bXV7wTN1uJ4KfI-yFXQm_AfLS7Ud","data":{"title":"Notification","body":"you have 1 notification"}}}
 
