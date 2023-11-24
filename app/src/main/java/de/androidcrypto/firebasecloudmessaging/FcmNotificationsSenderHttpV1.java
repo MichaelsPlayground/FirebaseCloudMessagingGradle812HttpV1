@@ -28,19 +28,11 @@ public class FcmNotificationsSenderHttpV1 {
 
     // this is using the new Api HttpV1, see migration guide:
     // based on https://github.com/basilmt/FCM-Snippet
-    String userFcmToken;
-    String title;
-    String body;
-    Context mContext;
-    Activity mActivity;
+    private Context mContext;
     private RequestQueue requestQueue;
 
-    public FcmNotificationsSenderHttpV1(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
-        this.userFcmToken = userFcmToken;
-        this.title = title;
-        this.body = body;
+    public FcmNotificationsSenderHttpV1(Context mContext) {
         this.mContext = mContext;
-        this.mActivity = mActivity;
     }
 
     public void sendOwn(String token, String title, String messageBody) {

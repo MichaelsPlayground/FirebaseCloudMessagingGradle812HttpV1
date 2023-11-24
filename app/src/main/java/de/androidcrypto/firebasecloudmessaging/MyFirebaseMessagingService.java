@@ -99,6 +99,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
             String notificationBody = remoteMessage.getNotification().getBody();
             String notificationTitle = remoteMessage.getNotification().getTitle();
+            System.out.println("*** remoteMessage from: "+ remoteMessage.getSenderId());
             if (remoteMessage.getNotification().getBody() != null) {
                 sendNotification(notificationTitle, notificationBody);
             }
@@ -175,7 +176,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri customSoundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.little_bell_14606);
-
+        Uri customSoundUri2 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.snd_elevator_power_down_37310);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         //.setSmallIcon(R.drawable.ic_stat_ic_notification)
@@ -183,8 +184,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle(getString(R.string.fcm_message))
                         .setContentText(messageBody)
                         .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        //.setSound(customSoundUri)
+                        //.setSound(defaultSoundUri)
+                        .setSound(customSoundUri)
                         .setContentIntent(pendingIntent)
                         .setLights(Color.MAGENTA, 1000, 1000);
 
@@ -216,6 +217,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri customSoundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.little_bell_14606);
+        Uri customSoundUri2 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.snd_elevator_power_down_37310);
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
@@ -224,8 +226,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle(messageTitle)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        //.setSound(customSoundUri)
+                        //.setSound(defaultSoundUri)
+                        .setSound(customSoundUri2)
                         .setContentIntent(pendingIntent)
                         .setLights(Color.MAGENTA, 1000, 1000);
 

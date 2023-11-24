@@ -17,7 +17,7 @@ to 4.4.x - this won't work
 
 Second note: do not update in **build.gradle (app)** the entry:
 
-implementation 'com.google.android.material:material:1.8.0'
+implementation 'com.google.android.material:material:1.9.0'
 
 to 1.10.x - this won't work ether, use 1.9.0.
 
@@ -100,6 +100,10 @@ Configure your Consent screen and then create an OAuth Client ID of type Desktop
 
 https://console.cloud.google.com/apis/api/googlecloudmessaging.googleapis.com/quotas?project=fir-cloudmessaging-b020c
 
-
+Sound effect:
+Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37310">Pixabay</a>
+```plaintext
+Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37310">Pixabay</a>
+```
 
 
