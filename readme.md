@@ -106,4 +106,10 @@ Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-at
 Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37310">Pixabay</a>
 ```
 
+## Sound resources for pings
+
+https://m2.material.io/design/sound/sound-resources.html
+
+Licensed under Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
+
 
